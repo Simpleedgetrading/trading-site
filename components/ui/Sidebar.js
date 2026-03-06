@@ -19,11 +19,7 @@ export default function Sidebar() {
         <Link href="/dashboard" className="hover:text-white">
           Dashboard
         </Link>
-
-        <Link href="/dashboard/daily-breakdown" className="hover:text-white">
-          Daily Market Breakdown
-        </Link>
-
+        
         <Link href="/dashboard/trade-setups" className="hover:text-white">
           Trade Setups
         </Link>
