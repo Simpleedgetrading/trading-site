@@ -1,12 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Trade from "../components/Trade";
 import Ticker from "../components/Ticker";
 import Testimonial from "../components/Testimonial";
 import Footer from "../components/Footer";
+import { useState } from "react"
+
 
 export default function Home() {
+
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   return (
     <>
       <Navbar />
@@ -114,28 +120,48 @@ export default function Home() {
 
 
             {/* PLATFORM IMAGES */}
-            <div className="grid md:grid-cols-3 gap-8 mb-20">
+<div className="grid md:grid-cols-3 gap-8 mb-20">
 
-              <img
-                src="/dashboard.png"
-                alt="Trade Dashboard"
-                className="rounded-xl border border-neutral-800"
-              />
+  <div 
+    className="cursor-pointer"
+    onClick={() => setSelectedImage("/dashboard.png")}
+  >
+    <Image
+      src="/dashboard.png"
+      alt="Trade Dashboard"
+      width={600}
+      height={400}
+      className="rounded-xl border border-neutral-800 hover:scale-105 transition"
+    />
+  </div>
 
-              <img
-                src="/performance-review.png"
-                alt="Post Session Review"
-                className="rounded-xl border border-neutral-800"
-              />
+  <div 
+    className="cursor-pointer"
+    onClick={() => setSelectedImage("/performance-review.png")}
+  >
+    <Image
+      src="/performance-review.png"
+      alt="Post Session Review"
+      width={600}
+      height={400}
+      className="rounded-xl border border-neutral-800 hover:scale-105 transition"
+    />
+  </div>
 
-              <img
-                src="/trade-log.png"
-                alt="Trade Log"
-                className="rounded-xl border border-neutral-800"
-              />
+  <div 
+    className="cursor-pointer"
+    onClick={() => setSelectedImage("/trade-log.png")}
+  >
+    <Image
+      src="/trade-log.png"
+      alt="Trade Log"
+      width={600}
+      height={400}
+      className="rounded-xl border border-neutral-800 hover:scale-105 transition"
+    />
+  </div>
 
-            </div>
-
+</div>
 
             <h3 className="text-xl font-semibold text-center mb-10">
               What You Get Inside The Mentorship
@@ -214,11 +240,11 @@ export default function Home() {
                   <li>• Real-time trade alerts</li>
                   <li>• Risk management reminders</li>
                   <li>• Limited group size</li>
-                  <li>• Private WhatsApp group</li>
+                  <li>• Private live chat group</li>
                 </ul>
 
                 <button className="bg-white text-black font-semibold px-6 py-3 rounded-lg hover:scale-105 transition">
-                  Join The Private Session
+                  Join The Private Session Now
                 </button>
 
               </div>
@@ -262,7 +288,66 @@ export default function Home() {
           </div>
 
         </section>
+<section className="py-24 px-6 bg-black text-white">
 
+  <div className="max-w-4xl mx-auto text-center">
+
+    <h2 className="text-3xl font-bold mb-12">
+      Frequently Asked Questions
+    </h2>
+
+  </div>
+
+  <div className="max-w-3xl mx-auto space-y-10 text-left">
+
+    <div>
+      <h3 className="text-lg font-semibold mb-2">
+        Do I need a lot of capital to start?
+      </h3>
+      <p className="text-neutral-400 leading-relaxed">
+        No. Anyone can learn the system. Many traders begin by testing the setups with very small position sizes or micro lots while they build confidence and experience. The focus is on learning the process and developing discipline, not starting with large capital.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-lg font-semibold mb-2">
+        Isn’t trading just gambling?
+      </h3>
+      <p className="text-neutral-400 leading-relaxed">
+        No. Gambling relies on chance, while professional trading is based on a repeatable edge, strict risk management, and disciplined execution. Inside the community you’ll learn how to approach the market with patience and structure, focusing on high-probability setups rather than constant trading.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-lg font-semibold mb-2">
+        Is the mentorship 1:1 or group based?
+      </h3>
+      <p className="text-neutral-400 leading-relaxed">
+        The mentorship primarily runs as a focused community where members learn together, share ideas, and review market setups. However, individual guidance and 1:1 help is available when needed to ensure members fully understand the concepts and can apply them correctly.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-lg font-semibold mb-2">
+        I’m a beginner with zero trading knowledge. Is this right for me?
+      </h3>
+      <p className="text-neutral-400 leading-relaxed">
+        Yes. The system is designed to be simple and structured so beginners can clearly understand how the market moves and how to identify high-probability setups. The focus is on building strong foundations: patience, discipline, and proper risk management.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="text-lg font-semibold mb-2">
+        I’m already an experienced trader. How will this help me?
+      </h3>
+      <p className="text-neutral-400 leading-relaxed">
+        Experienced traders often benefit from simplifying their approach. The mentorship focuses on refining execution, improving discipline, and identifying high-probability setups consistently. Many traders find that removing unnecessary complexity helps them trade more confidently and effectively.
+      </p>
+    </div>
+
+  </div>
+
+</section>
 
         {/* CTA */}
         <section className="py-32 text-center px-6">
@@ -272,7 +357,7 @@ export default function Home() {
           </h2>
 
           <p className="text-neutral-400 mb-10 text-lg">
-            Learn a simple edge and execute it consistently.
+            Learn a simple edge and how to execute it consistently.
           </p>
 
           <button
@@ -296,17 +381,35 @@ export default function Home() {
 
       </main>
 
-      <Footer />
-    </>
-  );
+<Footer />
+
+{selectedImage && (
+  <div
+    className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+    onClick={() => setSelectedImage(null)}
+  >
+    <div className="max-w-6xl w-full px-6">
+      <Image
+        src={selectedImage}
+        alt="Expanded Image"
+        width={1400}
+        height={900}
+        className="rounded-xl"
+      />
+    </div>
+  </div>
+)}
+
+</>
+);
 }
 
 
 function Feature({ title, text }: any) {
   return (
-    <div className="bg-black p-8 rounded-xl border border-neutral-800 hover:border-neutral-600 transition">
+    <div className="bg-black p-4 rounded-xl border border-neutral-800 hover:border-neutral-600 transition">
 
-      <h3 className="text-xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-">
         {title}
       </h3>
 

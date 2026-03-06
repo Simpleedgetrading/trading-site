@@ -1,52 +1,34 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
-export default function Success() {
+function SuccessContent() {
+  const searchParams = useSearchParams();
+  const session_id = searchParams.get("session_id");
 
-const router = useRouter()
-const params = useSearchParams()
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4">Payment Successful</h1>
+        <p className="text-neutral-400">
+          Welcome to the mentorship. Check your email for access instructions.
+        </p>
 
-useEffect(() => {
-
-const sessionId = params.get("session_id")
-
-async function fetchCustomer() {
-
-const res = await fetch("/api/session/", {
-method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify({ sessionId })
-})
-
-const data = await res.json()
-
-localStorage.setItem("stripeCustomerId", data.customer)
-
-setTimeout(() => {
-router.push("/dashboard")
-}, 2000)
-
+        {session_id && (
+          <p className="text-sm text-neutral-500 mt-4">
+            Session: {session_id}
+          </p>
+        )}
+      </div>
+    </div>
+  );
 }
 
-if(sessionId){
-fetchCustomer()
-}
-
-}, [params, router])
-
-return (
-
-<div className="min-h-screen flex items-center justify-center bg-black text-white">
-
-<h1 className="text-3xl font-bold">
-Payment Successful — Redirecting
-</h1>
-
-</div>
-
-)
+export default function SuccessPage() {
+  return (
+    <Suspense>
+      <SuccessContent />
+    </Suspense>
+  );
 }
