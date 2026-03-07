@@ -9,25 +9,31 @@ function SuccessContent() {
   const session_id = searchParams.get("session_id");
 
   useEffect(() => {
-  async function verifyPayment() {
-    if (!session_id) return;
+    async function verifyPayment() {
+      if (!session_id) return;
 
-    const res = await fetch("/api/verify-session", {
-      method: "POST",
-      body: JSON.stringify({ session_id }),
-    });
+      const res = await fetch("/api/verify-session", {
+        method: "POST",
+        body: JSON.stringify({ session_id }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.success) {
-      router.push("/dashboard");
-    } else {
-      router.push("/");
+      if (data.success) {
+
+        document.cookie = "paid=true; path=/;";
+
+        router.push("/dashboard");
+
+      } else {
+
+        router.push("/");
+
+      }
     }
-  }
 
-  verifyPayment();
-}, [session_id, router]);
+    verifyPayment();
+  }, [session_id, router]);
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
