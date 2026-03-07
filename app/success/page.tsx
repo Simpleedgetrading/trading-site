@@ -9,16 +9,25 @@ function SuccessContent() {
   const session_id = searchParams.get("session_id");
 
   useEffect(() => {
-    if (session_id) {
+  async function verifyPayment() {
+    if (!session_id) return;
 
-      // set payment cookie
-      document.cookie = "paid=true; path=/;";
+    const res = await fetch("/api/verify-session", {
+      method: "POST",
+      body: JSON.stringify({ session_id }),
+    });
 
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 3000);
+    const data = await res.json();
+
+    if (data.success) {
+      router.push("/dashboard");
+    } else {
+      router.push("/");
     }
-  }, [session_id, router]);
+  }
+
+  verifyPayment();
+}, [session_id, router]);
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
