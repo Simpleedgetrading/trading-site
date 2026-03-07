@@ -1,25 +1,47 @@
 "use client";
 
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 function SuccessContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const session_id = searchParams.get("session_id");
+
+  useEffect(() => {
+    if (session_id) {
+
+      // set payment cookie
+      document.cookie = "paid=true; path=/;";
+
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 3000);
+    }
+  }, [session_id, router]);
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Payment Successful</h1>
-        <p className="text-neutral-400">
-          Welcome to the mentorship. Check your email for access instructions.
+
+        <h1 className="text-4xl font-bold mb-4">
+          Payment Successful
+        </h1>
+
+        <p className="text-neutral-400 mb-4">
+          Welcome to the mentorship.
+        </p>
+
+        <p className="text-neutral-500">
+          Redirecting you to your dashboard...
         </p>
 
         {session_id && (
-          <p className="text-sm text-neutral-500 mt-4">
+          <p className="text-sm text-neutral-600 mt-6">
             Session: {session_id}
           </p>
         )}
+
       </div>
     </div>
   );
